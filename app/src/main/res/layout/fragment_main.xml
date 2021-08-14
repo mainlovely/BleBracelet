@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.zhj.bluetooth.sdkdemo.MainViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_1D1D1D"
+        android:orientation="vertical">
+
+        <com.zhj.bluetooth.sdkdemo.view.CJMAppBar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/deviceState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@{vm.deviceStateTv}"
+                    android:textColor="@color/white" />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        app:ifVisibleGone="@{vm.deviceInfoShow}">
+
+                        <TextView
+                            android:id="@+id/deviceInfoTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/device_info"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="设备信息" />
+
+                        <TextView
+                            android:id="@+id/deviceStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/toDeviceStatus"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/deviceInfoTitle"
+                            app:onSingleClick="@{(v) -> vm.toDeviceStatus()}"
+                            tools:text="查看设备状态>" />
+
+                        <TextView
+                            android:id="@+id/deviceName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@{vm.deviceProductTv}"
+                            android:textColor="@color/color_aaaaaa"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/deviceInfoTitle"
+                            tools:text="设备型号:" />
+
+                        <TextView
+                            android:id="@+id/devicePower"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{vm.devicePowerTv}"
+                            android:textColor="@color/color_aaaaaa"
+                            android:textSize="14sp"
+                            android:visibility="gone"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/deviceName"
+                            tools:text="设备电量" />
+
+                        <com.zhj.bluetooth.sdkdemo.view.progress.WaveProgress
+                            android:id="@+id/devicePowerProgress"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center_horizontal"
+                            app:circleWidth="3dp"
+                            app:darkWaveAnimTime="1000"
+                            app:darkWaveColor="@color/dark"
+                            app:hintColor="@color/color_aaaaaa"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/deviceName"
+                            app:lightWaveAnimTime="2000"
+                            app:lightWaveColor="@color/light"
+                            app:lightWaveDirect="R2L"
+                            app:lockWave="false"
+                            app:valueColor="@color/color_aaaaaa"
+                            app:valueSize="14sp"
+                            app:waveHeight="30dp"
+                            app:waveNum="1" />
+
+                        <TextView
+                            android:id="@+id/deviceAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="@{vm.deviceAddressTv}"
+                            android:textColor="@color/color_aaaaaa"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/deviceName"
+                            tools:text="蓝牙地址:" />
+
+                        <TextView
+                            android:id="@+id/deviceSportTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/sport_info"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/deviceAddress"
+                            tools:text="运动数据" />
+
+                        <com.zhj.bluetooth.sdkdemo.view.progress.DialProgress
+                            android:id="@+id/progressBarView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            app:antiAlias="true"
+                            app:arcColors="@array/gradient_arc_color"
+                            app:arcWidth="5dp"
+                            app:bgArcColor="@color/color_506683C6"
+                            app:bgArcWidth="5dp"
+                            app:dialColor="@color/white"
+                            app:hint="截止当前已走"
+                            app:hintColor="@color/color_aaaaaa"
+                            app:hintSize="15sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/deviceSportTitle"
+                            app:maxValue="10000"
+                            app:startAngle="135"
+                            app:sweepAngle="270"
+                            app:unit="步"
+                            app:unitColor="@color/color_aaaaaa"
+                            app:unitSize="15sp"
+                            app:value="0"
+                            app:valueColor="@color/color_aaaaaa"
+                            app:valueSize="25sp" />
+
+                        <LinearLayout
+                            android:id="@+id/llSport"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/progressBarView">
+
+                            <TextView
+                                android:id="@+id/tvCalory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@mipmap/calore2x"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                android:text="@{vm.deviceTotalCalory}"
+                                android:textColor="@color/color_aaaaaa"
+                                android:textSize="14sp"
+                                tools:text="0千卡" />
+
+                            <TextView
+                                android:id="@+id/tvDistance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50dp"
+                                android:drawableStart="@mipmap/distance_img"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                android:text="@{vm.deviceTotalDistance}"
+                                android:textColor="@color/color_aaaaaa"
+                                android:textSize="14sp"
+                                tools:text="0km" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llHistory"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_marginTop="40dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toBottomOf="@+id/llSport">
+
+                            <LinearLayout
+                                android:id="@+id/llHeartRate"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                app:onSingleClick="@{(v) -> vm.toHeartRatePage()}"
+                                >
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@mipmap/main_menu_heart"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/heart_rate"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textSize="12sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llSleep"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                app:onSingleClick="@{(v) -> vm.toSleepPage()}"
+                                >
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@mipmap/main_menu_sleep"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sleep"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{vm.deviceSleepTime}"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    android:visibility="invisible"
+                                    />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llSportHistory"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                app:onSingleClick="@{(v) -> vm.toSportPage()}"
+                                >
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@mipmap/main_menu_sport"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sport_history"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textSize="12sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    android:visibility="invisible"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/llSwitch"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                app:onSingleClick="@{(v) -> vm.toSwitchPage()}"
+                                >
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@mipmap/main_menu_switch"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/switcher"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textSize="12sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    android:visibility="invisible"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            app:layout_constraintTop_toBottomOf="@+id/llHistory"
+                            android:visibility="gone"
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/llAlarmClock"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                app:onSingleClick="@{(v) -> vm.toAlarmClock()}"
+                                >
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@mipmap/main_menu_alarm"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/alarm_clock"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textSize="12sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    android:visibility="invisible"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/llSedentaryReminder"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                app:onSingleClick="@{(v) -> vm.toSedentaryReminder()}"
+                                >
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@mipmap/main_menu_long_sit"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sedentary_reminder"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textSize="12sp"
+                                    android:textColor="@color/color_aaaaaa"
+                                    android:visibility="invisible"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </ScrollView>
+            </LinearLayout>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+
+</layout>

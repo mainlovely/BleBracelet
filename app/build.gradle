@@ -1,0 +1,134 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "30.0.0"
+
+    dataBinding {
+        enabled = true
+    }
+
+    defaultConfig {
+        applicationId "com.zhj.bluetooth.sdkdemo"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", '"http://ncsiot.epitech.cn/"'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", '"http://ncsiot.epitech.cn/"'
+        }
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res',
+                    'src/main/res-layout/ble'
+            ]
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            force "com.squareup.retrofit2:retrofit:$retrofitVersion"
+            force "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+            force "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
+            force "com.squareup.okhttp3:okhttp:$okhttpVersion"
+            force "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+            force "com.squareup.okio:okio:$okioVersion"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    /* BleSDK */
+    implementation(name: 'zhj_sdk', ext: 'aar')
+
+    /* Koin */
+    implementation "org.koin:koin-core:$koinVersion"
+    implementation "org.koin:koin-androidx-scope:$koinVersion"
+    implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+    //    implementation "org.koin:koin-androidx-fragment:$koinVersion"
+    implementation "org.koin:koin-androidx-ext:$koinVersion"
+
+    /* EventBus */
+    implementation "org.greenrobot:eventbus:$rootProject.ext.eventbus"
+    /* epoxy */
+    implementation "com.airbnb.android:epoxy:$epoxyVersion"
+    implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"
+    implementation "com.airbnb.android:epoxy-annotations:$epoxyVersion"
+    kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
+
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$archLifecycleVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation "androidx.work:work-runtime-ktx:$workVersion"
+
+
+    /* qmui */
+    implementation 'com.qmuiteam:qmui:2.0.0-alpha02'
+    /* SmartRefreshLayout */
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
+    /* Logger */
+    implementation 'com.orhanobut:logger:2.2.0'
+    /* Widget */
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    /* Utils */
+//    implementation 'com.blankj:utilcodex:1.26.0'
+    /* glide */
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+//    implementation 'com.github.bumptech.glide:okhttp3-integration:4.11.0'
+    /* 状态导航栏 */
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+    implementation 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+    /* 权限 */
+    api 'com.yanzhenjie:permission:2.0.0-rc3'
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
+
+}

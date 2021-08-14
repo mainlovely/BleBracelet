@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorPrimaryRed">#DA3F47</color>
+    <color name="colorAccent">#DA3F47</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="color_1D1D1D">#1D1D1D</color>
+    <color name="color_20_black">#20000000</color>
+    <color name="dialog_mask">#8F000000</color>
+    <color name="color_eeeeee">#eeeeee</color>
+    <color name="color_aaaaaa">#aaaaaa</color>
+    <color name="color_506683C6">#506683C6</color>
+    <color name="color_50FFFFFF">#90FFFFFF</color>
+    <color name="color_626262">#626262</color>
+    <color name="color_62C4FF">#62C4FF</color>
+    <color name="color_62C4FF_alpha50">#8062C4FF</color>
+
+
+    <color name="dark">#803cbcb7</color>
+    <color name="light">#800de6e8</color>
+    <color name="color_50DA3F47">#50DA3F47</color>
+    <color name="color_80DA3F47">#80DA3F47</color>
+    <integer-array name="gradient_arc_color">
+        <item>@color/color_50DA3F47</item>
+        <item>@color/color_80DA3F47</item>
+        <item>@color/colorPrimaryRed</item>
+    </integer-array>
+
+</resources>

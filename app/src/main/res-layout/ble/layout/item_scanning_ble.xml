@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="data"
+            type="com.zhj.bluetooth.sdkdemo.data.model.BleDeviceData" />
+        <variable
+            name="vm"
+            type="com.zhj.bluetooth.sdkdemo.ui.ble.scanning.ScanningBleListVM" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:onSingleClick="@{(v) -> vm.onItemClick(data)}"
+        >
+
+        <ImageView
+            android:id="@+id/ivDevice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/device_img_scan"/>
+
+        <TextView
+            android:id="@+id/tvDeviceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/ivDevice"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:text="@{data.bleDevice.mDeviceName}"
+            />
+
+        <TextView
+            android:id="@+id/tvMac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/ivDevice"
+            android:layout_below="@id/tvDeviceName"
+            android:textColor="@color/color_eeeeee"
+            android:text="@{data.bleDevice.mDeviceAddress}"
+            />
+
+        <ImageView
+            android:id="@+id/ivState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+        <ImageView
+            android:id="@+id/tvState"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/device_rssi_1"/>
+        <ImageView
+            android:id="@+id/tvConnect"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/roart_img"/>
+    </RelativeLayout>
+</layout>
